@@ -17,8 +17,8 @@
 	<table>
 		<thead>
 		<tr>
-			<th> Name </th>
 			<th> Preview </th>
+			<th> Name </th>
 		</tr>
 
 		</thead>
@@ -27,8 +27,8 @@
 			<td colspan="2"> No Images Available </td>
 		</tr>
 		<tr th:each="image : ${images}">
-			<td><span th:text="${image.name}"> Name </span></td>
 			<td><img th:src="@{/images/{image}(image=${image.md5})}"/></td>
+			<td><span th:text="${image.name}"> Name </span></td>
 		</tr>
 		</tbody>
 	</table>
