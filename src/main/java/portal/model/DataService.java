@@ -24,12 +24,12 @@ public class DataService {
     private Map<String, ImageModelImpl> imagesMap = new HashMap<>();
     private Map<String, ImageModelImpl> previewMap = new HashMap<>();
     private final Logger LOGGER = LoggerFactory.getLogger(DataService.class);
-    public static final String URL_UPLOAD_ERROR="Error while uploaded url";
-    public static final String URL_UPLOAD_SUCCESS="You successfully uploaded url";
-    public static final String JSON_UPLOAD_ERROR="Error while uploaded json";
-    public static final String JSON_UPLOAD_SUCCESS="You successfully uploaded json";
-    public static final String FILE_UPLOAD_ERROR="Can't upload images";
-    public static final String FILE_UPLOAD_SUCCESS="You successfully uploaded images: ";
+    public static final String URL_UPLOAD_ERROR = "Error while uploaded url";
+    public static final String URL_UPLOAD_SUCCESS = "You successfully uploaded url";
+    public static final String JSON_UPLOAD_ERROR = "Error while uploaded json";
+    public static final String JSON_UPLOAD_SUCCESS = "You successfully uploaded json";
+    public static final String FILE_UPLOAD_ERROR = "Can't upload images";
+    public static final String FILE_UPLOAD_SUCCESS = "You successfully uploaded images: ";
 
     public List<ImageModelImpl> getAllPreview() {
         ArrayList<ImageModelImpl> imagesList = new ArrayList<>();
@@ -131,9 +131,9 @@ public class DataService {
                 baos.flush();
                 baos.close();
                 putInMemory(c, url);
-                result =URL_UPLOAD_SUCCESS;
+                result = URL_UPLOAD_SUCCESS;
             } catch (IOException e) {
-                result =URL_UPLOAD_ERROR;
+                result = URL_UPLOAD_ERROR;
                 LOGGER.error(result, e.getMessage());
             }
         }

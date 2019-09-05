@@ -13,8 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import portal.model.DataService;
 import portal.model.FileUploadResult;
 import portal.model.ImageModelImpl;
-
-import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -56,7 +54,7 @@ public class UploadController {
     }
 
     @RequestMapping(value = "/images/{id:.+}", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) throws IOException {
+    public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) {
         LOGGER.info("Getting images preview");
         byte[] imageInByte = dataService.getPreviewBytes(id);
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageInByte);
