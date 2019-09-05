@@ -24,6 +24,12 @@ public class DataService {
     private Map<String, ImageModelImpl> imagesMap = new HashMap<>();
     private Map<String, ImageModelImpl> previewMap = new HashMap<>();
     private final Logger LOGGER = LoggerFactory.getLogger(DataService.class);
+    public static final String URL_UPLOAD_ERROR="Error while uploaded url";
+    public static final String URL_UPLOAD_SUCCESS="You successfully uploaded url";
+    public static final String JSON_UPLOAD_ERROR="Error while uploaded json";
+    public static final String JSON_UPLOAD_SUCCESS="You successfully uploaded json";
+    public static final String FILE_UPLOAD_ERROR="Can't upload images";
+    public static final String FILE_UPLOAD_SUCCESS="You successfully uploaded images: ";
 
     public List<ImageModelImpl> getAllPreview() {
         ArrayList<ImageModelImpl> imagesList = new ArrayList<>();
@@ -66,7 +72,7 @@ public class DataService {
 
 
     public FileUploadResult putFiles(MultipartFile[] files) {
-        String successMessage = "You successfully uploaded images: ";
+        String successMessage = FILE_UPLOAD_SUCCESS;
         String errorMessage = "";
 
         for (MultipartFile file : files) {
@@ -80,7 +86,7 @@ public class DataService {
                     putInMemory(image, fileName);
                     successMessage += fileName + "; ";
                 } catch (Exception e) {
-                    errorMessage = "Can't upload images ";
+                    errorMessage =FILE_UPLOAD_ERROR ;
                     LOGGER.error(errorMessage, e.getCause());
                     errorMessage += fileName + "; ";
                 }
@@ -105,9 +111,9 @@ public class DataService {
                 image = ImageIO.read(bis);
                 bis.close();
                 putInMemory(image, imageJsonObj.getName());
-                result = "You successfully uploaded json ";
+                result = JSON_UPLOAD_SUCCESS;
             } catch (Exception e) {
-                result = "Error while uploaded json ";
+                result = JSON_UPLOAD_ERROR;
                 LOGGER.error(result, e);
             }
         }
@@ -125,9 +131,9 @@ public class DataService {
                 baos.flush();
                 baos.close();
                 putInMemory(c, url);
-                result = "You successfully uploaded url";
+                result =URL_UPLOAD_SUCCESS;
             } catch (IOException e) {
-                result = "Error while uploaded url";
+                result =URL_UPLOAD_ERROR;
                 LOGGER.error(result, e.getMessage());
             }
         }

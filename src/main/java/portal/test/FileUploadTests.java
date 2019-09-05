@@ -13,6 +13,7 @@ import java.net.URL;
 import portal.model.DataService;
 
 import static org.testng.AssertJUnit.assertEquals;
+import static portal.model.DataService.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FileUploadTests {
@@ -29,14 +30,28 @@ public class FileUploadTests {
     public void putErrorUrl() {
         String failUrl = "https://ichef.bbci.co.uk/news/624/cpsprodpb/11DB3/production/_102693137_281befe0-99d8-4d72-9dd8-beeafa6ce8c2333.jpg";
         String result = dataService.putUrl(failUrl);
-        assertEquals("Error while uploaded url",result);
+        assertEquals(URL_UPLOAD_ERROR,result);
     }
 
     @Test
     public void putSuccessUrl() {
         String failUrl = "https://ichef.bbci.co.uk/news/624/cpsprodpb/11DB3/production/_102693137_281befe0-99d8-4d72-9dd8-beeafa6ce8c2.jpg";
         String result = dataService.putUrl(failUrl);
-        assertEquals("You successfully uploaded url",result);
+        assertEquals(URL_UPLOAD_SUCCESS,result);
+    }
+
+    @Test
+    public void putErrorJSON() {
+        String failUrl = "Errrrr";
+        String result = dataService.putJson(failUrl);
+        assertEquals(JSON_UPLOAD_ERROR,result);
+    }
+
+    @Test
+    public void putSuccessJSON() {
+        String failUrl = "https://ichef.bbci.co.uk/news/624/cpsprodpb/11DB3/production/_102693137_281befe0-99d8-4d72-9dd8-beeafa6ce8c2.jpg";
+        String result = dataService.putUrl(failUrl);
+        assertEquals(JSON_UPLOAD_SUCCESS,result);
     }
 
     @Test
