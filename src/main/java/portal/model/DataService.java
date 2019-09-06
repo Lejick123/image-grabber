@@ -74,7 +74,9 @@ public class DataService {
     public FileUploadResult putFiles(MultipartFile[] files) {
         String successMessage = FILE_UPLOAD_SUCCESS;
         String errorMessage = "";
-
+        if (files == null) {
+            return new FileUploadResult("", FILE_UPLOAD_ERROR);
+        }
         for (MultipartFile file : files) {
 
             if (file.isEmpty()) {
@@ -97,7 +99,7 @@ public class DataService {
 
     public String putJson(String json) {
         String result = "Please select a json to upload";
-        if (json.isEmpty()) {
+        if (json==null || json.isEmpty()) {
 
         } else {
             try {
@@ -122,7 +124,7 @@ public class DataService {
 
     public String putUrl(String url) {
         String result = "Please select a url to upload";
-        if (!url.isEmpty()) {
+        if (url==null || !url.isEmpty()) {
             try {
                 URL formedUrl = new URL(url);
                 BufferedImage c = ImageIO.read(formedUrl);

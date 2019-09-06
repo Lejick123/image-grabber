@@ -6,19 +6,14 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import portal.model.DataService;
 import portal.model.FileUploadResult;
-import sun.misc.IOUtils;
-
 import java.io.*;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static portal.model.DataService.*;
-public class FileUploadTests {
+public class UnitTests {
     private DataService dataService = new DataService();
 
     @Test
@@ -63,7 +58,7 @@ public class FileUploadTests {
     }
 
 
-    private String readString(String filePath) {
+    public static String readString(String filePath) {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader br = Files.newBufferedReader(Paths.get(filePath))) {
 
@@ -80,7 +75,7 @@ public class FileUploadTests {
        return  sb.toString();
     }
 
-    private MultipartFile[] readFiles(String filePath) throws IOException {
+    public static MultipartFile[] readFiles(String filePath) throws IOException {
         File file=new File(filePath+"/file_cat_1.jpg");
         FileInputStream input = new FileInputStream(file);
         MultipartFile multipartFile = new MockMultipartFile("file", input);
@@ -88,7 +83,7 @@ public class FileUploadTests {
         return  files;
 
     }
-    private MultipartFile[] readWrongFiles(String filePath) throws IOException {
+    public static MultipartFile[] readWrongFiles(String filePath) throws IOException {
         File file=new File(filePath+"/json_cat.json");
         FileInputStream input = new FileInputStream(file);
         MultipartFile multipartFile = new MockMultipartFile("file", input);
