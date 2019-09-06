@@ -2,12 +2,13 @@
 package portal.test;
 
 import org.junit.Test;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 import portal.model.DataService;
+import portal.model.FileUploadResult;
 import sun.misc.IOUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -15,6 +16,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static portal.model.DataService.*;
 public class FileUploadTests {
     private DataService dataService = new DataService();
@@ -46,6 +48,20 @@ public class FileUploadTests {
         String result = dataService.putJson(successJson);
         assertEquals(JSON_UPLOAD_SUCCESS, result);
     }
+    @Test
+    public void putErrorFile() throws IOException {
+        MultipartFile[] mpFiles = readWrongFiles("src/main/data");
+        FileUploadResult result = dataService.putFiles(mpFiles);
+        assertTrue( result.getError().startsWith(FILE_UPLOAD_ERROR));
+    }
+
+    @Test
+    public void putSuccessFile() throws IOException {
+        MultipartFile[] mpFiles = readFiles("src/main/data");
+        FileUploadResult result = dataService.putFiles(mpFiles);
+        assertTrue(result.getSuccess().startsWith(FILE_UPLOAD_SUCCESS));
+    }
+
 
     private String readString(String filePath) {
         StringBuilder sb = new StringBuilder();
@@ -62,7 +78,21 @@ public class FileUploadTests {
         }
 
        return  sb.toString();
+    }
 
+    private MultipartFile[] readFiles(String filePath) throws IOException {
+        File file=new File(filePath+"/file_cat_1.jpg");
+        FileInputStream input = new FileInputStream(file);
+        MultipartFile multipartFile = new MockMultipartFile("file", input);
+        MultipartFile[] files= {multipartFile};
+        return  files;
 
+    }
+    private MultipartFile[] readWrongFiles(String filePath) throws IOException {
+        File file=new File(filePath+"/json_cat.json");
+        FileInputStream input = new FileInputStream(file);
+        MultipartFile multipartFile = new MockMultipartFile("file", input);
+        MultipartFile[] files= {multipartFile};
+        return  files;
     }
 }
