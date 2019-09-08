@@ -1,5 +1,4 @@
-FROM alpine:edge
-MAINTAINER baeldung.com
-RUN apk add --no-cache openjdk8
-COPY files/UnlimitedJCEPolicyJDK8/* \
-  /usr/lib/jvm/java-1.8-openjdk/jre/lib/security/
+FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+ARG DEPENDENCY=target/dependency
+ENTRYPOINT ["java","-cp","image-grabber:image-grabber/src/main/java/*","portal.Application"]
